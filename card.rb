@@ -3,35 +3,31 @@ class Card
   def initialize(num, suit, game)
     @num = num
     @suit = suit
-    case num
-      when 'A'
-        if game == "casinowar"
+    if game == "casinowar"
+      case num
+        when 'A'
           @val = 14
-        else
-          @val = 11
-        end
-      when 'K'
-        if game == "casinowar"
+        when 'K'
           @val = 13
-        else
-          @val = 10
-        end
-      when 'Q'
-        if game == 'casinowar'
+        when 'Q'
           @val = 12
-        else
-          @val = 10
-        end
-      when 'J'
-        if game == 'casinowar'
+        when 'J'
           @val = 11
         else
+          @val = num
+      end
+    else
+      case num
+        when 'A'
+          @val = 11
+        when 'K', 'Q', 'J'    
           @val = 10
+        else
+          @val = num  
         end
-      else
-        @val = num
       end
   end
+  
   def display_card
     str = "#{@num} of #{@suit}"
   end
