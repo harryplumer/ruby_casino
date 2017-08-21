@@ -9,14 +9,10 @@ class Slots
       puts "\nSorry, you lose"
       player.wallet.subtract(bet)
     else
+      @sounds.winning.play
       win_amount = bet * result
       puts "\nCongratulations, you won \$#{win_amount}"
       player.wallet.add(win_amount)
-    end
-    
-    puts "Press enter to play again or type quit to return to Main Manu"
-    if gets.strip.downcase != "quit"
-      Slots.new(player)
     end
 
   end

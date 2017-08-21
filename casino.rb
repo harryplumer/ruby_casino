@@ -20,8 +20,20 @@ class Casino
     case gets.to_i
       when 1
         HighLow.new(@player)
+        puts "Press enter to play again or type quit to return to Main Manu"
+        if gets.strip.downcase == "quit"
+          menu
+        else
+          HighLow.new(@player)
+        end
       when 2
         Slots.new(@player)
+        puts "Press enter to play again or type quit to return to Main Manu"
+        if gets.strip.downcase == "quit"
+          menu
+        else
+          Slots.new(@player)
+        end
       when 3
         puts "Thanks for stopping by the casino"
         exit
