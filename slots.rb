@@ -6,11 +6,11 @@ class Slots
     bet = player.wallet.ask_for_bet
     result = spin_machine(bet)
     if result == 0
-      puts "Sorry, you lose"
+      puts "\nSorry, you lose"
       player.wallet.subtract(bet)
     else
-      win_amount = bet + (bet * result)
-      puts "Congratulations, you won \$#{win_amount}"
+      win_amount = bet * result
+      puts "\nCongratulations, you won \$#{win_amount}"
       player.wallet.add(win_amount)
     end
   end
@@ -18,7 +18,7 @@ class Slots
   def spin_machine(bet)
     for i in 0..2
       @machine[i] = @options[rand(0..9)]
-      print("#{@machine[i]}\t\t")
+      print("\t#{@machine[i]}\t")
       sleep(1.5)
     end
     
