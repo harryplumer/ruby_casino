@@ -13,7 +13,7 @@ class Wallet
   end
 
   def ask_for_bet
-    puts "How much would you like to bet?"
+    puts "You currently have \$#{@amount}. How much would you like to bet?"
       bet = Float(gets.strip) rescue false
       if bet
         if bet > @amount
