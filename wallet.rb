@@ -5,5 +5,12 @@ class Wallet
 
   end
 
+  def add(money)
+    @amount += money
+  end
+
+  def subtract(money)
+    @amount -= money
+  end
   #TODO: should have other methods to add or sub from wallet
 end
