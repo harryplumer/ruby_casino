@@ -5,7 +5,7 @@ class Card
     @suit = suit
     case num
       when 'A'
-        @val = 1
+        @val = 11
       when 'J','Q','K'
         @val = 10
       else
