@@ -2,28 +2,21 @@ require 'pry'
 require_relative 'card'
 
 class Deck
-  
-  def initialize(game)
+  attr_accessor :cards
+  def initialize(num_decks)
     @suits = ['Spades','Clubs','Diamonds','Hearts']
     @nums = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K']
-    if game == "blackjack"
-      @cards = generate_blackjack_deck
-    else
-      @cards = generate_deck
+    @cards = generate_deck(num_decks)
   end
 
-  def generate_deck
-    deck = []
-    @suits.each do |suit|
-      @nums.each{ |num| deck << Card.new(num, suit)}
-    end
-    deck
-  end
-
-  def generate_blackjack_deck
+  def generate_deck(num_decks)
     decks = []
-    for i in (1..6)
-      decks << generate_deck
+    for i in (1..num_decks)
+      @suits.each do |suit|
+        @nums.each{ |num| decks << Card.new(num, suit)}
+      end
+      i += 1
+    end
     decks
   end
 
@@ -32,5 +25,3 @@ class Deck
   end
 
 end
-
-d = Deck.new
