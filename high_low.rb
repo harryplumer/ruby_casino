@@ -39,8 +39,10 @@ class HighLow
           player.wallet.subtract(bet)
         end
       end
-
-
+      puts "Press enter to play again or type quit to return to Main Manu"
+          if gets.strip.downcase != "quit"
+            HighLow.new(player)
+          end
   end
 
 end
