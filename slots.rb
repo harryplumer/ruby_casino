@@ -13,6 +13,12 @@ class Slots
       puts "\nCongratulations, you won \$#{win_amount}"
       player.wallet.add(win_amount)
     end
+    
+    puts "Press enter to play again or type quit to return to Main Manu"
+    if gets.strip.downcase != "quit"
+      Slots.new(player)
+    end
+
   end
 
   def spin_machine(bet)
