@@ -3,6 +3,7 @@ require 'pry'
 require_relative 'player'
 require_relative 'high_low'
 require_relative 'slots'
+require_relative 'blackjack'
 
 class Casino
   attr_accessor :players
@@ -16,7 +17,8 @@ class Casino
   def menu
     puts "1) Play HighLow"
     puts "2) Play Slots"
-    puts "3) Quit"
+    puts "3) Play Blackjack"
+    puts "4) Quit"
     case gets.to_i
       when 1
         HighLow.new(@player)
@@ -35,6 +37,9 @@ class Casino
           Slots.new(@player)
         end
       when 3
+        Blackjack.new(@player)
+        menu
+      when 4
         puts "Thanks for stopping by the casino"
         exit
       else
