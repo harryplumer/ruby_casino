@@ -21,9 +21,9 @@ class Slots
     @machine = ["", "", ""]
     puts "You win your bet if you get 2 matches and win double your bet if you get 3 matches!"
     bet = @player.wallet.ask_for_bet
-    result = spin_machine
+    @result = spin_machine
     
-    if result == 0
+    if @result == 0
       you_lose(bet)
     else
       you_win(bet)
@@ -63,7 +63,7 @@ class Slots
 
   def you_win(bet)
     @sounds.winning.play
-    win_amount = bet * result
+    win_amount = bet * @result
     puts "\nCongratulations, you won \$#{win_amount}"
     @player.wallet.add(win_amount)
     end_round
