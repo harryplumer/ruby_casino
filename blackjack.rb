@@ -18,10 +18,16 @@ class Blackjack
    |____/|______/_/    \_\_____|_|\_\____/_/    \_\_____|_|\_\
                                                               "
     puts "Welcome to blackjack, #{@player.name}!"                                                      
-    play_hand
+    init_hand
   end
   
-  def play_hand
+  def init_hand
+    if @deck.length < 25
+      @deck = @deck.shuffle_cards      
+      puts "Shuffling deck..."
+      sleep(1)
+    end
+    
     @bet = @player.wallet.ask_for_bet
     
     @user_hand = []
@@ -36,16 +42,12 @@ class Blackjack
   end
 
   def display_hand_start
-    if @deck.length < 25
-      @deck = @deck.shuffle_cards      
-      puts "Shuffling deck..."
-      sleep(1)
-    end
-
     puts "Dealing the cards..."
     sleep(1)
     puts "The dealer is showing the #{@dealer_hand[0].display_card}"
     puts "You have the #{@user_hand[0].display_card} and #{@user_hand[1].display_card} for a total of #{get_hand_total(@user_hand)}"
+    
+    #check for dealer and user blackjack
     if check_blackjack(@dealer_hand)
       if check_blackjack(@user_hand)
         puts "You both have blackjack, the hand is a push"
@@ -57,6 +59,11 @@ class Blackjack
         @player.wallet.subtract(@bet)
         end_hand
       end
+    elsif check_blackjack(@user_hand)
+      puts "You have blackjack with #{@user_hand[0].display_card} and #{@user_hand[1].display_card}!"
+      @sounds.winning.play
+      puts "You win \$#{@bet * 1.5}"
+      @player.wallet.add(@bet * 1.5)
       end_hand
     else
       hand_menu(1)
@@ -64,14 +71,7 @@ class Blackjack
   end
 
   def hand_menu(stage)
-    if check_blackjack(@user_hand)
-      puts "You have blackjack with #{@user_hand[0].display_card} and #{@user_hand[1].display_card}!"
-      @sounds.winning.play
-      puts "You win \$#{@bet * 1.5}"
-      @player.wallet.add(@bet * 1.5)
-      end_hand
-    end
-
+    
     valid_choices = 2
     puts "--- YOUR CHOICES ---"
     puts "1) Hit"
@@ -166,11 +166,11 @@ class Blackjack
       @sounds.winning.play
       @player.wallet.add(@bet)
     elsif user_total > dealer_total
-      puts "You win the hand with #{user_total} and you win $#{@bet}"
+      puts "You win the hand with #{user_total} and you win \$#{@bet}"
       @sounds.winning.play
       @player.wallet.add(@bet)
     elsif user_total < dealer_total
-      puts "You lose the hand with #{user_total} and lose $#{@bet}"
+      puts "You lose the hand with #{user_total} and lose \$#{@bet}"
       @sounds.no.play
       @player.wallet.subtract(@bet)
     else
@@ -203,9 +203,8 @@ class Blackjack
   def end_hand
     puts "Press enter to play again or type quit to return to main menu"
     if gets.strip.downcase != "quit"
-      play_hand
+      init_hand
     end
-
   end
 
 end

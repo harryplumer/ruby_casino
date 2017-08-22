@@ -30,6 +30,7 @@ class Casino
   end
 
   def menu
+    puts "CURRENT PLAYER: #{@active_player.name} \(\$#{'%.2f' % @active_player.wallet.amount}\)"
     puts " --- MAIN MENU ---"
     puts "1) Play HighLow"
     puts "2) Play Slots"
