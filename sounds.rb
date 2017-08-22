@@ -2,6 +2,7 @@ require 'sounder'
 require 'pry'
 
 class Sound
+  attr_accessor :welcome, :winning, :beginslot, :lose, :no, :diceroll, :roulette, :shufflecard
 
   def initialize
     @welcome = Sounder::Sound.new "assets/welcome.wav"

@@ -1,4 +1,5 @@
 require 'pry'
+require 'sounder'
 
 require_relative 'player'
 require_relative 'high_low'
