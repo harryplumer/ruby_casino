@@ -5,13 +5,16 @@ require_relative 'high_low'
 require_relative 'slots'
 require_relative 'blackjack'
 require_relative 'casinowar'
+require_relative 'roulette'
 
 class Casino
   attr_accessor :players
 
   def initialize
     puts 'Welcome To The Ruby Casino'
-    @player = Player.new
+    @players = []
+    @active_player = Player.new
+    @players << @active_player
     menu
   end
 
@@ -20,7 +23,9 @@ class Casino
     puts "2) Play Slots"
     puts "3) Play Blackjack"
     puts "4) Play Casinowar"
-    puts "5) Quit"
+    puts "5) Play Roulette"
+    puts "6) Change/Add Players"
+    puts "6) Quit"
     case gets.to_i
       when 1
         HighLow.new(@player)
@@ -50,6 +55,10 @@ class Casino
           CasinoWar.new(@player)
         end
       when 5
+          Roulette.new(@player)
+      when 6
+        player_menu
+      when 7
         puts "Thanks for stopping by the casino"
         exit
       else
@@ -58,6 +67,16 @@ class Casino
     end
     menu
   end
+
+  def player_menu
+    puts "--- PLAYER SELECT MENU ---"
+    @players.each_with_index{|player, index| puts "#{index+1}: #{player.name} \(\$#{player.wallet.amount}\)"}
+  end
+
+
+
+
+
 end
 
 Casino.new
