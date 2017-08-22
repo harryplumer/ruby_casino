@@ -4,6 +4,7 @@ require_relative 'player'
 require_relative 'high_low'
 require_relative 'slots'
 require_relative 'blackjack'
+require_relative 'casinowar'
 
 class Casino
   attr_accessor :players
@@ -18,7 +19,8 @@ class Casino
     puts "1) Play HighLow"
     puts "2) Play Slots"
     puts "3) Play Blackjack"
-    puts "4) Quit"
+    puts "4) Play Casinowar"
+    puts "5) Quit"
     case gets.to_i
       when 1
         HighLow.new(@player)
@@ -40,6 +42,14 @@ class Casino
         Blackjack.new(@player)
         menu
       when 4
+        CasinoWar.new(@player)
+        puts "Press enter to play again or type quit to return to Main Menu"
+        if gets.strip.downcase == "quit"
+          menu
+        else
+          CasinoWar.new(@player)
+        end
+      when 5
         puts "Thanks for stopping by the casino"
         exit
       else
