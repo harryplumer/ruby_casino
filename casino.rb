@@ -34,7 +34,7 @@ class Casino
     puts "1) Play HighLow"
     puts "2) Play Slots"
     puts "3) Play Blackjack"
-    puts "4) Play Casinowar"
+    puts "4) Play Casino War"
     puts "5) Play Roulette"
     puts "6) Change/Add Players"
     puts "7) Quit"
@@ -50,14 +50,9 @@ class Casino
         menu
       when 4
         CasinoWar.new(@active_player)
-        puts "Press enter to play again or type quit to return to Main Menu"
-        if gets.strip.downcase == "quit"
-          menu
-        else
-          CasinoWar.new(@active_player)
-        end
+        menu
       when 5
-          Roulette.new(@active_player)
+        Roulette.new(@active_player)
       when 6
         player_menu
         menu
@@ -73,7 +68,7 @@ class Casino
 
   def player_menu
     puts "--- PLAYER SELECT MENU ---"
-    @players.each_with_index{|player, index| puts "#{index+1}: #{player.name} \(\$#{player.wallet.amount}\)"}
+    @players.each_with_index{|player, index| puts "#{index+1}: #{player.name} \(\$#{'%.2f' % player.wallet.amount}\)"}
     puts "#{players.length+1}: Add new player"
     choice = gets.strip.to_i
     if choice == 0 || choice > players.length+1
