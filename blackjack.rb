@@ -79,10 +79,6 @@ class Blackjack
     if stage == 1
       puts "3) Double Down"
       valid_choices += 1
-      if @user_hand[0].num == @user_hand[1].num
-        puts "4) Split"
-        valid_choices += 1
-      end
     end
     
     case gets.to_i
