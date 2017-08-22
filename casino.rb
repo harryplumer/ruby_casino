@@ -42,18 +42,24 @@ class Casino
     case gets.to_i
       when 1
         HighLow.new(@active_player)
+        random_events
         menu
       when 2
         Slots.new(@active_player)
+        random_events
         menu
       when 3
         Blackjack.new(@active_player)
+        random_events
         menu
       when 4
         CasinoWar.new(@active_player)
+        random_events
         menu
       when 5
         Roulette.new(@active_player)
+        random_events
+        menu
       when 6
         player_menu
         menu
@@ -80,6 +86,22 @@ class Casino
     else choice == players.length
       @active_player = Player.new
       @players << @active_player
+    end
+  end
+
+  def random_events
+    events = [{event: "Get caught cheating, pit boss breaks your hand. Lose $20", result: -20},
+              {event: "Mob boss finds you in the bathroom, gives you swirly. Lose $50", result: -50},
+              {event: "Hooker tricks you into going upstairs. Lose $250", result: -250},
+              {event: "Drunk guy drops his wallet and you find it. Get $150", result: 150},
+              {event: "Your preseason Super Bowl bet comes back from 28-3 down to win. Get $500", result: 500}
+    ]
+
+    num = rand(41)
+    if num < events.length
+      puts "RANDOM EVENT: #{events[num][:event]}"
+      @active_player.wallet.add(events[num][:result])
+      sleep(1)
     end
   end
 
