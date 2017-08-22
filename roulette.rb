@@ -163,7 +163,7 @@ def list_bets
   elsif @total == 0
     puts "Overall, you broke even"
   else
-    puts "Overall, you lost \$#{'%.2f' % @total}"
+    puts "Overall, you lost \$#{'%.2f' % (@total*-1)}"
   end
 
 end_spin
