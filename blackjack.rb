@@ -1,12 +1,23 @@
 require 'pry'
 require_relative 'deck'
+require_relative 'sounds'
 
 class Blackjack
   attr_accessor :deck
   def initialize(player)
+    @sounds = Sound.new
     @deck = Deck.new(6, "blackjack")
     @deck = @deck.shuffle_cards
     @player = player
+    puts "
+    ____  _               _____ _  __    _         _____ _  __
+   |  _ \| |        /\   / ____| |/ /   | |  /\   / ____| |/ /
+   | |_) | |       /  \ | |    | ' /    | | /  \ | |    | ' / 
+   |  _ <| |      / /\ \| |    |  < _   | |/ /\ \| |    |  <  
+   | |_) | |____ / ____ \ |____| . \ |__| / ____ \ |____| . \ 
+   |____/|______/_/    \_\_____|_|\_\____/_/    \_\_____|_|\_\
+                                                              "
+    puts "Welcome to blackjack, #{@player.name}!"                                                      
     play_hand
   end
   
@@ -38,19 +49,24 @@ class Blackjack
     if check_blackjack(@dealer_hand)
       if check_blackjack(@user_hand)
         puts "You both have blackjack, the hand is a push"
+        end_hand
       else
         puts "The dealer has blackjack with #{@dealer_hand[0].display_card} and #{@dealer_hand[1].display_card}"
+        @sounds.no.play
         puts "You lose \$#{@bet}"
         @player.wallet.subtract(@bet)
+        end_hand
       end
       end_hand
+    else
+      hand_menu(1)
     end
-    hand_menu(1)
   end
 
   def hand_menu(stage)
     if check_blackjack(@user_hand)
       puts "You have blackjack with #{@user_hand[0].display_card} and #{@user_hand[1].display_card}!"
+      @sounds.winning.play
       puts "You win \$#{@bet * 1.5}"
       @player.wallet.add(@bet * 1.5)
       end_hand
@@ -140,6 +156,7 @@ class Blackjack
 
   def user_bust
     puts "You received the #{@user_hand.last.display_card} and busted with a total of #{get_hand_total(@user_hand)}. You lose \$#{@bet}."
+    @sounds.no.play
     @player.wallet.subtract(@bet)
     end_hand
   end
@@ -150,12 +167,15 @@ class Blackjack
 
     if dealer_total > 21
       puts "The dealer busts with #{dealer_total} and you win \$#{@bet}!"
+      @sounds.winning.play
       @player.wallet.add(@bet)
     elsif user_total > dealer_total
       puts "You win the hand with #{user_total} and you win $#{@bet}"
+      @sounds.winning.play
       @player.wallet.add(@bet)
     elsif user_total < dealer_total
       puts "You lose the hand with #{user_total} and lose $#{@bet}"
+      @sounds.no.play
       @player.wallet.subtract(@bet)
     else
       puts "The hand was a push"

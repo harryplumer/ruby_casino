@@ -12,53 +12,55 @@ class Casino
   attr_accessor :players
 
   def initialize
-    puts 'Welcome To The Ruby Casino'
+    puts "
+    /$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$ /$$   /$$  /$$$$$$ 
+   /$$__  $$ /$$__  $$ /$$__  $$|_  $$_/| $$$ | $$ /$$__  $$
+  | $$  \__/| $$  \ $$| $$  \__/  | $$  | $$$$| $$| $$  \ $$
+  | $$      | $$$$$$$$|  $$$$$$   | $$  | $$ $$ $$| $$  | $$
+  | $$      | $$__  $$ \____  $$  | $$  | $$  $$$$| $$  | $$
+  | $$    $$| $$  | $$ /$$  \ $$  | $$  | $$\  $$$| $$  | $$
+  |  $$$$$$/| $$  | $$|  $$$$$$/ /$$$$$$| $$ \  $$|  $$$$$$/
+   \______/ |__/  |__/ \______/ |______/|__/  \__/ \______/ 
+                                                            "
     @players = []
+    puts "To begin you must add a player!"
     @active_player = Player.new
     @players << @active_player
     menu
   end
 
   def menu
+    puts " --- MAIN MENU ---"
     puts "1) Play HighLow"
     puts "2) Play Slots"
     puts "3) Play Blackjack"
     puts "4) Play Casinowar"
     puts "5) Play Roulette"
     puts "6) Change/Add Players"
-    puts "6) Quit"
+    puts "7) Quit"
     case gets.to_i
       when 1
-        HighLow.new(@player)
-        puts "Press enter to play again or type quit to return to Main Manu"
-        if gets.strip.downcase == "quit"
-          menu
-        else
-          HighLow.new(@player)
-        end
+        HighLow.new(@active_player)
+        menu
       when 2
-        Slots.new(@player)
-        puts "Press enter to play again or type quit to return to Main Manu"
-        if gets.strip.downcase == "quit"
-          menu
-        else
-          Slots.new(@player)
-        end
+        Slots.new(@active_player)
+        menu
       when 3
-        Blackjack.new(@player)
+        Blackjack.new(@active_player)
         menu
       when 4
-        CasinoWar.new(@player)
+        CasinoWar.new(@active_player)
         puts "Press enter to play again or type quit to return to Main Menu"
         if gets.strip.downcase == "quit"
           menu
         else
-          CasinoWar.new(@player)
+          CasinoWar.new(@active_player)
         end
       when 5
-          Roulette.new(@player)
+          Roulette.new(@active_player)
       when 6
         player_menu
+        menu
       when 7
         puts "Thanks for stopping by the casino"
         exit
@@ -72,11 +74,18 @@ class Casino
   def player_menu
     puts "--- PLAYER SELECT MENU ---"
     @players.each_with_index{|player, index| puts "#{index+1}: #{player.name} \(\$#{player.wallet.amount}\)"}
+    puts "#{players.length+1}: Add new player"
+    choice = gets.strip.to_i
+    if choice == 0 || choice > players.length+1
+      puts "Invalid input, please try again."
+      player_menu
+    elsif choice <= players.length
+      @active_player = @players[choice-1]
+    else choice == players.length
+      @active_player = Player.new
+      @players << @active_player
+    end
   end
-
-
-
-
 
 end
 

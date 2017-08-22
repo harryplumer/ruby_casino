@@ -3,7 +3,10 @@ require 'pry'
 
 class Sound
   attr_accessor :welcome, :winning, :beginslot, :lose, :no, :diceroll, :roulette, :shufflecard
+<<<<<<< HEAD
 
+=======
+>>>>>>> UI updates and roulette workover
   def initialize
     @welcome = Sounder::Sound.new "assets/welcome.wav"
     @winning = Sounder::Sound.new "assets/winslot.wav"
